@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  adk-python-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: adk-python-dev
+    volumes:
+      - .:/app
+      # 가상 환경은 컨테이너 내부에만 존재하도록 함
+      - /app/.venv
+    ports:
+      - "8000:8000"  # FastAPI 애플리케이션 포트
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    # 개발 중에 컨테이너가 항상 실행되도록 tty 설정
+    tty: true
+    stdin_open: true
+    command: bash
